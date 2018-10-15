@@ -16,36 +16,6 @@ void readLine ( char *inputPtr )
 }
 
 
-// process readLine to check for commands and definitions
-int processLine( const char *inputPtr )
-{
-  char command[10];
-  unsigned int i = 0, j = 0;
-
-  while ( *inputPtr != ' ' ) {
-    command[i] = *inputPtr;
-    *inputPtr++, i++;
-  }
-  command[i - 1] = '\0';
-
-  printf("\n");
-  for ( j = 0; j < strlen(command); j++ ) {
-    printf("%c", command[j]);
-  }
-
-  if ( strcmp ( command, "set" )) {
-    printf("\nmmhmm\n");
-    return 1;
-  }
-
-  if ( strcmp ( command, "calc" )) {
-    return 2;
-  }
-
-
-  return 666;
-}
-
 // prints all the valid commands to the user
 void printHelp(void)
 {
@@ -66,11 +36,14 @@ void printHelp(void)
 
 
 /*
-// sets a variable to some value of type double
-int set ( char variable, double value )
+matlab_var_t *find_var ( char var )
 {
 
-
-  return value;
 }
-*/
+
+
+//
+matlab_arr_t *find_arr ( char var )
+{
+
+}*/
