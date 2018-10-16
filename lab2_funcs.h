@@ -13,9 +13,10 @@
 // add all other functions below
 int clear ( char var );
 int calc ( char r, char x, char y, char op );
-void readLine( char *inputPtr );
+void readLine ( char *inputPtr );
 int set ( char variable, double value );
-void printHelp( void );
-
+void printHelp ( void );
+int show ( char name );
+int variableOrArray ( char input );
 
 #endif /* __LAB2_FUNCS_H__ */
