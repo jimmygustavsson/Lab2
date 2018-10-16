@@ -22,7 +22,7 @@ extern matlab_arr_t arrs[6];
 /* function declarations */
 void readLine ( char *inputPtr );
 void printHelp ( void );
-int processLine ( const char *line );
+int variableOrArray ( char input );
 
 matlab_var_t *find_var ( char var );
 matlab_arr_t *find_arr ( char var );
