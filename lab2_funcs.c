@@ -111,22 +111,22 @@ int show ( char name )
   return 0;
 }
 
+// Clears the array or varible
+int clear ( char name ) {
+    int i = 0;
 
+    if ( variableOrArray ( name ) == 0 ) {
+	     (*find_var( name )).v = 0.0;
+    }
 
+    if ( variableOrArray ( name ) == 1) {
+	     for( i = 0; i < ARRAY_LEN; ++i ) {
+	        (*find_arr ( name )).v[i] = 0.0;
+	     }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return 0;
+}
 
 // segments input array into the values writter by user and returns value as double
 void segmentString ( char *input )

@@ -17,6 +17,7 @@ void readLine ( char *inputPtr );
 int set ( char variable, double value );
 void printHelp ( void );
 int show ( char name );
+int clear ( char name );
 int variableOrArray ( char input );
 int array ( char name, double start, double stop );
 void segmentString ( char *input );

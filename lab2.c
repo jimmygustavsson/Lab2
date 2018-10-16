@@ -49,10 +49,10 @@ int main(int argc, char *argv[])
       show( input[5] );
     }
 
-
-
-
-
+    // clears array or varible
+    else if ( ( strncmp ( input, "clear", 5 )) == 0 ) {
+	     clear( input[6]);
+    }
 
     // sets array elements with even spaces from start to stop value
     else if ( (strncmp ( input, "array", 5 )) == 0 ) {
