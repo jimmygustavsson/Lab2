@@ -30,5 +30,6 @@ matlab_arr_t *find_arr ( char var );
 int array ( char name, double start, double stop );
 int show ( char name );
 int calc ( char r, char x,char y, char op );
+int clear (char name);
 
 #endif /* __LAB2_H__ */
