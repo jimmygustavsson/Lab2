@@ -99,11 +99,11 @@ int show ( char name )
   int i = 0;
 
   if ( variableOrArray ( name ) == 0 ) {
-    printf("%f", (*find_var( name )).v );
+    printf("%f\n", (*find_var( name )).v );
   }
 
   if ( variableOrArray ( name ) == 1 ) {
-    for ( i = 0; i < 50; i++ ) {
+    for ( i = 0; i < ARRAY_LEN; i++ ) {
       printf("%f\n", (*find_arr ( name )).v[i] );
     }
   }
@@ -112,19 +112,84 @@ int show ( char name )
 }
 
 // Clears the array or varible
-int clear(char name){
+int clear ( char name ) {
     int i = 0;
 
-
-    if ( variableOrArray ( name ) == 0){
-	(*find_var( name )).v = 0.0;
+    if ( variableOrArray ( name ) == 0 ) {
+	     (*find_var( name )).v = 0.0;
     }
-    if ( variableOrArray ( name ) == 1){
-	for( i = 0; i < 50; ++i){
-	    (*find_arr ( name )).v[i] = 0.0;
-	}
+
+    if ( variableOrArray ( name ) == 1) {
+	     for( i = 0; i < ARRAY_LEN; ++i ) {
+	        (*find_arr ( name )).v[i] = 0.0;
+	     }
     }
 
     return 0;
 }
 
+// segments input array into the values writter by user and returns value as double
+void segmentString ( char *input )
+{
+  char firstValue[100 + 1], secondValue[100 + 1], c;
+  int i = 6, firstIndex = 0, j = 8, secondIndex = 0;
+
+  if ( ( strncmp ( input, "set", 3 )) == 0 ) {
+    do {
+      c = input[i];
+      firstValue[firstIndex] = c;
+      i++, firstIndex++;
+    }
+    while ( c != '\0');
+
+    firstValue[firstIndex - 1] = '\0';
+
+    startValue = (double) atoi(firstValue);     // global variable startValue
+  }
+
+  if ( ( strncmp ( input, "array", 5 )) == 0 ) {
+    do {
+      c = input[j];
+      firstValue[firstIndex] = c;
+      j++, firstIndex++;
+    }
+    while ( c != ' ' );
+
+    firstValue[firstIndex - 1] = '\0';
+
+    startValue = (double) atoi(firstValue);   // global variable startValue
+
+     do {
+       c = input[j];
+       secondValue[secondIndex] = c;
+       j++, secondIndex++;
+     }
+     while ( c != '\0' );
+
+     secondValue[secondIndex - 1] = '\0';
+
+     stopValue = (double) atoi(secondValue);  // global variable secondValue
+  }
+}
+
+// sets an array to values from start to stop with equal steps inbetween
+int array ( char name, double start, double stop )
+{
+  int i = 0;
+  double diff;
+  matlab_arr_t *tempArr;
+
+  tempArr = find_arr ( name );
+
+  if ( tempArr != NULL ) {
+    diff = stop - start;
+    diff = diff / (ARRAY_LEN - 1);
+
+    for ( i = 0; i < ARRAY_LEN; i++ ) {
+      (*tempArr).v[i] = start;
+      start = start + diff;
+    }
+  }
+
+  return 666;
+}

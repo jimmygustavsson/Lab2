@@ -22,10 +22,11 @@ matlab_arr_t arrs[6] = { { 'A', {1.0, 2.0, 3.0, 4.0, 5.0, 1.0, 2.0,
 
 matlab_var_t vars[6] = { {'a'}, {'b'}, {'c'}, {'r'}, {'x'}, {'y'} };
 
+double startValue, stopValue;
+
 
 int main(int argc, char *argv[])
 {
-
   char input[1000 + 1];
 
   while ( true ) {
@@ -45,15 +46,21 @@ int main(int argc, char *argv[])
 
     // show array or variable
     else if ( (strncmp ( input, "show", 4 )) == 0 ) {
-	show( input[5] );
+      show( input[5] );
     }
 
     // clears array or varible
-    else if((strncmp( input, "clear", 5)) == 0){
-	clear( input[6]);
+    else if ( ( strncmp ( input, "clear", 5 )) == 0 ) {
+	     clear( input[6]);
     }
 
-    // not a valid input, displays message and let's the program continue
+    // sets array elements with even spaces from start to stop value
+    else if ( (strncmp ( input, "array", 5 )) == 0 ) {
+      segmentString( input );
+      array( input [6], startValue, stopValue );
+    }
+
+    // sets an array to values from start to stop with equal steps inbetween
     else {
       printf("Invalid expression. Try again or write 'help' to display valid commands.'\n");
       continue;
