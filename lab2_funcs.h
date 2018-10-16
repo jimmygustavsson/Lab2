@@ -18,5 +18,7 @@ int set ( char variable, double value );
 void printHelp ( void );
 int show ( char name );
 int variableOrArray ( char input );
+int array ( char name, double start, double stop );
+void segmentString ( char *input );
 
 #endif /* __LAB2_FUNCS_H__ */
