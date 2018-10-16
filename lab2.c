@@ -49,12 +49,18 @@ int main(int argc, char *argv[])
       show( input[5] );
     }
 
+
+
+
+
+
+    // sets array elements with even spaces from start to stop value
     else if ( (strncmp ( input, "array", 5 )) == 0 ) {
       segmentString( input );
       array( input [6], startValue, stopValue );
     }
 
-    // not a valid input, displays message and let's the program continue
+    // sets an array to values from start to stop with equal steps inbetween
     else {
       printf("Invalid expression. Try again or write 'help' to display valid commands.'\n");
       continue;

@@ -111,6 +111,23 @@ int show ( char name )
   return 0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // segments input array into the values writter by user and returns value as double
 void segmentString ( char *input )
 {
@@ -155,7 +172,7 @@ void segmentString ( char *input )
   }
 }
 
-// Sets an array to values from start to stop with equal steps inbetween
+// sets an array to values from start to stop with equal steps inbetween
 int array ( char name, double start, double stop )
 {
   int i = 0;
