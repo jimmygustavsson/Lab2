@@ -83,11 +83,11 @@ int variableOrArray ( char input )
   tempArr = find_arr ( input );
 
   if ( tempVar != NULL ) {
-    return 10;
+    return 0;
   }
 
   if ( tempArr != NULL ) {
-    return 15;
+    return 1;
   }
 
   return 666;
@@ -97,8 +97,6 @@ int variableOrArray ( char input )
 int show ( char name )
 {
   int i = 0;
-
-  printf("\n%i\n", variableOrArray(name));
 
   if ( variableOrArray ( name ) == 0 ) {
     printf("%f", (*find_var( name )).v );
