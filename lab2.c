@@ -34,18 +34,23 @@ int main(int argc, char *argv[])
     readLine ( input );
 
     // writes out all valid commands to the user
-    if ( (strcmp ( input, "help" )) == 0 ) {
+    if ( ( strcmp ( input, "help" )) == 0 ) {
       printHelp();
     }
 
     // exits the program
-    else if ( ((strcmp ( input, "exit" )) == 0 ) ||
-               (strcmp ( input, "quit" )) == 0 ) {
+    else if ( (( strcmp ( input, "exit" )) == 0 ) ||
+               ( strcmp ( input, "quit" )) == 0 ) {
       exit(0);
     }
 
+    // shows the value of all variables
+    else if ( ( strncmp ( input, "show_vars", 9 )) == 0 ) {
+      show_vars();
+    }
+
     // show array or variable
-    else if ( (strncmp ( input, "show", 4 )) == 0 ) {
+    else if ( ( strncmp ( input, "show", 4 )) == 0 ) {
       show( input[5] );
     }
 
@@ -55,9 +60,20 @@ int main(int argc, char *argv[])
     }
 
     // sets array elements with even spaces from start to stop value
-    else if ( (strncmp ( input, "array", 5 )) == 0 ) {
+    else if ( ( strncmp ( input, "array", 5 )) == 0 ) {
       segmentString( input );
       array( input [6], startValue, stopValue );
+    }
+
+    // sets a variable to a number and sets an array to a specific number in all elements
+    else if( ( strncmp ( input, "set", 3 )) == 0 ) {
+	    segmentString ( input );
+	    set ( input[4], startValue );
+    }
+
+    // calculator, allows +-*/ operators on variables and +- for arrays
+    else if ( ( input [2] == '=' ) ) {
+      calc ( input[0], input[4], input[8], input[6] );
     }
 
     // sets an array to values from start to stop with equal steps inbetween

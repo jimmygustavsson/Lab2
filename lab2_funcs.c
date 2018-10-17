@@ -99,13 +99,15 @@ int show ( char name )
   int i = 0;
 
   if ( variableOrArray ( name ) == 0 ) {
-    printf("%f\n", (*find_var( name )).v );
+    printf("%c = %g\n", (*find_var ( name )).n, (*find_var ( name )).v );
   }
 
   if ( variableOrArray ( name ) == 1 ) {
+    printf("%c = [ ", (*find_arr ( name )).n);
     for ( i = 0; i < ARRAY_LEN; i++ ) {
-      printf("%f\n", (*find_arr ( name )).v[i] );
+      printf("%g ", (*find_arr ( name )).v[i] );
     }
+    printf("]\n");
   }
 
   return 0;
@@ -144,7 +146,7 @@ void segmentString ( char *input )
 
     firstValue[firstIndex - 1] = '\0';
 
-    startValue = (double) atoi(firstValue);     // global variable startValue
+    startValue = atof(firstValue);     // global variable startValue
   }
 
   if ( ( strncmp ( input, "array", 5 )) == 0 ) {
@@ -157,7 +159,7 @@ void segmentString ( char *input )
 
     firstValue[firstIndex - 1] = '\0';
 
-    startValue = (double) atoi(firstValue);   // global variable startValue
+    startValue = atof(firstValue);   // global variable startValue
 
      do {
        c = input[j];
@@ -192,4 +194,101 @@ int array ( char name, double start, double stop )
   }
 
   return 666;
+}
+
+// sets an array or variable to a start value
+int set ( char name, double v ) {
+	int i = 0;
+
+
+    if ( variableOrArray ( name ) == 0 ) {
+       (*find_var( name )).v = v;
+    }
+
+    if ( variableOrArray ( name ) == 1 ) {
+	     for ( i = 0; i < ARRAY_LEN; ++i ) {
+	        (*find_arr ( name )).v[i] = v;
+	     }
+    }
+
+  return 0;
+}
+
+// calculator , allows +-*/ operators on variables and +- for arrays
+int calc ( char r, char x, char y, char op )
+{
+  int i = 0;
+
+  switch ( op ) {
+    case '+':
+      if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
+        (*find_var ( r )).v = (*find_var ( x )).v + (*find_var ( y )).v;
+      }
+      else {
+        printf("Operation not allowed, must be variables.\n");
+      }
+
+      if ( variableOrArray ( x ) == 1 && variableOrArray ( y ) ) {
+        for ( i = 0; i < ARRAY_LEN; i++ ) {
+          (*find_arr ( r )).v[i] = (*find_arr ( x )).v[i] + (*find_arr ( y )).v[i];
+        }
+      }
+      else {
+        printf("Operation not allowed, must be arrays.\n");
+      }
+    break;
+
+    case '-':
+      if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
+        (*find_var ( r )).v = (*find_var ( x )).v - (*find_var ( y )).v;
+      }
+      else {
+        printf("Operation not allowed, must be variables.\n");
+      }
+
+      if ( variableOrArray ( x ) == 1 && variableOrArray ( y ) ) {
+        for ( i = 0; i < ARRAY_LEN; i++ ) {
+          (*find_arr ( r )).v[i] = (*find_arr ( x )).v[i] - (*find_arr ( y )).v[i];
+        }
+      }
+      else {
+        printf("Operation not allowed, must be arrays.\n");
+      }
+    break;
+
+    case '*':
+      if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
+        (*find_var ( r )).v = (*find_var ( x )).v * (*find_var ( y )).v;
+      }
+      else {
+        printf("Operation not allowed, must be variables.\n");
+      }
+    break;
+
+    case '/':
+      if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
+        (*find_var ( r )).v = (*find_var ( x )).v / (*find_var ( y )).v;
+      }
+      else {
+        printf("Operation not allowed, must be variables.\n");
+      }
+    break;
+
+    default:
+      printf("Not an allowed operator. Allowed operators are +-*/.\n");
+      break;
+  }
+
+  return 666;
+}
+
+// prints out values of all variables
+int show_vars(void)
+{
+  int i = 0;
+  for ( i = 0; i < 6; i++ ) {
+    printf("%c = %g\n", vars[i].n, vars[i].v);
+  }
+
+  return 0;
 }
