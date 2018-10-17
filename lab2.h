@@ -37,6 +37,7 @@ int calc ( char r, char x,char y, char op );
 int clear (char name);
 int set ( char name, double v );
 int importCSV ( char var, const char *filename );
+int exportCSV ( char var, const char *filename );
 int showCSV ( const char *filename );
 
 #endif /* __LAB2_H__ */

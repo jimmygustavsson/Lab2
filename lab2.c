@@ -24,7 +24,6 @@ matlab_var_t vars[6] = { {'a'}, {'b'}, {'c'}, {'r'}, {'x'}, {'y'} };
 
 double startValue, stopValue;
 
-
 int main(int argc, char *argv[])
 {
   char input[1000 + 1], filename[100];
@@ -73,6 +72,18 @@ int main(int argc, char *argv[])
       filename[j] = '\0';
 
       importCSV( input[10], filename );
+    }
+
+    else if ( ( strncmp ( input, "exportCSV", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      exportCSV( input[10], filename );
     }
 
     // show array or variable

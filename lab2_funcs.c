@@ -313,8 +313,8 @@ int showCSV ( const char *filename )
 // imports values from a file and stores it in an array of ARRAY_LEN elements
 int importCSV ( char var, const char *filename )
 {
-  int i = 0, j = 0, k = 0;
-  char c, valueAsString[50];
+  int i = 0;
+  char valueAsString[50];
   FILE *in;
 
   in = fopen ( filename, "r" );
@@ -322,17 +322,30 @@ int importCSV ( char var, const char *filename )
     printf("Canẗ open file.\n");
   }
 
-  for ( k = 0; k < ARRAY_LEN; k++ ) {
-    i = 0;
-    while ( ( c = getc ( in )) != '\n' ) {
-      valueAsString[i] = c;
-      i++;
-    }
-    valueAsString[i] = '\0';
-
-    (*find_arr ( var )).v[j] = atof ( valueAsString );
-    j++;
+  for ( i = 0; i < ARRAY_LEN; i++ ) {
+    fgets( valueAsString, 100, in );
+    (*find_arr ( var )).v[i] = atof ( valueAsString );
   }
+
+  fclose(in);
+
+  return 1;
+}
+
+// exports values from a file and stores it in an array of ARRAY_LEN elements
+int exportCSV ( char var, const char *filename )
+{
+  int i = 0;
+  FILE *out;
+
+  out = fopen ( filename, "w" );
+
+  for ( i = 0; i < ARRAY_LEN; i++ ) {
+    fprintf( out, "%f", (*find_arr(var)).v[i] );
+    fputs("\n", out);
+  }
+
+  fclose(out);
 
   return 1;
 }
