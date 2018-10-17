@@ -24,10 +24,9 @@ matlab_var_t vars[6] = { {'a'}, {'b'}, {'c'}, {'r'}, {'x'}, {'y'} };
 
 double startValue, stopValue;
 
-
 int main(int argc, char *argv[])
 {
-  char input[1000 + 1];
+  char input[1000 + 1], filename[100];
 
   while ( true ) {
     // read line from user
@@ -46,7 +45,45 @@ int main(int argc, char *argv[])
 
     // shows the value of all variables
     else if ( ( strncmp ( input, "show_vars", 9 )) == 0 ) {
-      show_vars();
+      show_vars ();
+    }
+
+    // shows values in file
+    else if ( ( strncmp ( input, "showCSV", 7 )) == 0 ) {
+      int i = 8, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      showCSV ( filename );
+    }
+
+    // import values from a CSV file to an array
+    else if ( ( strncmp ( input, "importCSV", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      importCSV( input[10], filename );
+    }
+
+    else if ( ( strncmp ( input, "exportCSV", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      exportCSV( input[10], filename );
     }
 
     // show array or variable
