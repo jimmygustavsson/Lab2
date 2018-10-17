@@ -292,3 +292,47 @@ int show_vars(void)
 
   return 0;
 }
+
+// prints file to terminal
+int showCSV ( const char *filename )
+{
+  char c;
+  FILE *in;
+
+  in = fopen ( filename, "r" );
+
+  while ( (c = getc ( in )) != EOF ) {
+    putc (c, stdout);
+  }
+
+  fclose ( in );
+
+  return 1;
+}
+
+// imports values from a file and stores it in an array of ARRAY_LEN elements
+int importCSV ( char var, const char *filename )
+{
+  int i = 0, j = 0, k = 0;
+  char c, valueAsString[50];
+  FILE *in;
+
+  in = fopen ( filename, "r" );
+  if ( (in = fopen ( filename, "r" )) == NULL ) {
+    printf("Canẗ open file.\n");
+  }
+
+  for ( k = 0; k < ARRAY_LEN; k++ ) {
+    i = 0;
+    while ( ( c = getc ( in )) != '\n' ) {
+      valueAsString[i] = c;
+      i++;
+    }
+    valueAsString[i] = '\0';
+
+    (*find_arr ( var )).v[j] = atof ( valueAsString );
+    j++;
+  }
+
+  return 1;
+}

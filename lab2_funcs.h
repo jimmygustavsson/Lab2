@@ -22,5 +22,7 @@ int clear ( char name );
 int variableOrArray ( char input );
 int array ( char name, double start, double stop );
 void segmentString ( char *input );
+int importCSV ( char var, const char *filename );
+int showCSV ( const char *filename );
 
 #endif /* __LAB2_FUNCS_H__ */
