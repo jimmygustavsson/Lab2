@@ -14,9 +14,10 @@
 int clear ( char var );
 int calc ( char r, char x, char y, char op );
 void readLine ( char *inputPtr );
-int set ( char variable, double value );
+int set ( char name, double v );
 void printHelp ( void );
 int show ( char name );
+int show_vars ( void );
 int clear ( char name );
 int variableOrArray ( char input );
 int array ( char name, double start, double stop );
