@@ -253,6 +253,10 @@ int calc ( char r, char x, char y, char op )
     break;
 
     case '*':
+      if ( variableOrArray ( r ) == 1 ) {
+        printf("Operation not allowed.\n");
+        break;
+      }
       if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
         (*find_var ( r )).v = (*find_var ( x )).v * (*find_var ( y )).v;
       }
@@ -262,6 +266,10 @@ int calc ( char r, char x, char y, char op )
     break;
 
     case '/':
+      if ( variableOrArray ( r ) == 1 ) {
+        printf("Operation not allowed.\n");
+        break;
+      }
       if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
         (*find_var ( r )).v = (*find_var ( x )).v / (*find_var ( y )).v;
       }
@@ -360,7 +368,6 @@ int exportMAT ( char var, const char *filename )
   return 666;
 }
 */
-
 int debounce ( char R, char I )
 {
   int i, counter = 0, j;
