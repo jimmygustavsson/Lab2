@@ -224,17 +224,15 @@ int calc ( char r, char x, char y, char op )
       if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
         (*find_var ( r )).v = (*find_var ( x )).v + (*find_var ( y )).v;
       }
-      else {
-        printf("Operation not allowed, must be variables.\n");
-      }
 
       if ( variableOrArray ( x ) == 1 && variableOrArray ( y ) ) {
         for ( i = 0; i < ARRAY_LEN; i++ ) {
           (*find_arr ( r )).v[i] = (*find_arr ( x )).v[i] + (*find_arr ( y )).v[i];
         }
       }
-      else {
-        printf("Operation not allowed, must be arrays.\n");
+      if ( ((variableOrArray ( x ) == 0) && (variableOrArray ( y ) == 1)) ||
+           ((variableOrArray ( x ) == 1) && (variableOrArray ( y ) == 0)) ) {
+        printf("Operation not allowed.\n");
       }
     break;
 
@@ -242,17 +240,15 @@ int calc ( char r, char x, char y, char op )
       if ( variableOrArray ( x ) == 0 && variableOrArray ( y ) == 0 ) {
         (*find_var ( r )).v = (*find_var ( x )).v - (*find_var ( y )).v;
       }
-      else {
-        printf("Operation not allowed, must be variables.\n");
-      }
 
       if ( variableOrArray ( x ) == 1 && variableOrArray ( y ) ) {
         for ( i = 0; i < ARRAY_LEN; i++ ) {
           (*find_arr ( r )).v[i] = (*find_arr ( x )).v[i] - (*find_arr ( y )).v[i];
         }
       }
-      else {
-        printf("Operation not allowed, must be arrays.\n");
+      if ( ((variableOrArray ( x ) == 0) && (variableOrArray ( y ) == 1)) ||
+           ((variableOrArray ( x ) == 1) && (variableOrArray ( y ) == 0)) ) {
+        printf("Operation not allowed.\n");
       }
     break;
 
@@ -348,4 +344,69 @@ int exportCSV ( char var, const char *filename )
   fclose(out);
 
   return 1;
+}
+/*
+// exports an array to a MAT file
+int exportMAT ( char var, const char *filename )
+{
+  Fmatrix tempStruct;
+  FILE *out;
+  int i = 0;
+
+  out = fopen ( filename, "w" );
+
+  for ( i = 0; i < ARRAY_LEN, )
+
+  return 666;
+}
+*/
+
+int debounce ( char R, char I )
+{
+  int i, counter = 0, j;
+  for ( i = 0; i < ARRAY_LEN; i ++ ) {
+    if ( (*find_arr ( I )).v[i] > 3 ) {
+      (*find_arr ( R )).v[i] = 3.3;
+    }
+
+    if ( (*find_arr ( I )).v[i] < 0.3 ) {
+      (*find_arr ( R )).v[i] = 0;
+    }
+  }
+
+  // remove signal fluxing from array R
+  i = 0;
+  while ( i < ARRAY_LEN ) {
+    // searching for flux in signal
+    if ((*find_arr(R)).v[i] == (*find_arr(R)).v[i + 1]) {
+      i++;
+    }
+    // flux found
+    else {
+      i++;
+        // real signal only when 10 elements in a row has the same value
+        for ( ; i < ARRAY_LEN; i++ ) {
+          if ( (*find_arr(R)).v[i] == (*find_arr(R)).v[i + 1] ) {
+            counter++;
+
+            if ( counter == 10 ) {
+              i -= 10;
+              for ( j = 0; j < i; j++ ) {
+                (*find_arr(R)).v[j] = (*find_arr(R)).v[0];
+            }
+            break;
+          }
+        }
+
+        // sets counter to 0 if the condition "10 elements in a row" is not filled
+          if ((*find_arr(R)).v[i] != (*find_arr(R)).v[i + 1]) {
+            counter = 0;
+          }
+        }
+
+        break;
+      }
+    }
+
+  return 0;
 }

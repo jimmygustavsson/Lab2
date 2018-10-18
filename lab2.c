@@ -74,6 +74,7 @@ int main(int argc, char *argv[])
       importCSV( input[10], filename );
     }
 
+    // export values from an array to a CSV file
     else if ( ( strncmp ( input, "exportCSV", 9 )) == 0 ) {
       int i = 12, j = 0;
       do {
@@ -84,6 +85,25 @@ int main(int argc, char *argv[])
       filename[j] = '\0';
 
       exportCSV( input[10], filename );
+    }
+/*
+    // export values from an array to a MAT file
+    else if ( ( strncmp ( input, "exportMAT", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      exportMAT( input[10], filename );
+    }
+*/
+
+    // takes an array with analog signal and makes a perfect signal
+    else if ( ( strncmp ( input, "debounce", 8 )) == 0 ) {
+      debounce( input[9], input[11] );
     }
 
     // show array or variable
