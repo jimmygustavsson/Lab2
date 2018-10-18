@@ -22,38 +22,122 @@ matlab_arr_t arrs[6] = { { 'A', {1.0, 2.0, 3.0, 4.0, 5.0, 1.0, 2.0,
 
 matlab_var_t vars[6] = { {'a'}, {'b'}, {'c'}, {'r'}, {'x'}, {'y'} };
 
+double startValue, stopValue;
 
 int main(int argc, char *argv[])
 {
-
-  char input[1000 + 1];
+  char input[1000 + 1], filename[100];
 
   while ( true ) {
     // read line from user
     readLine ( input );
 
     // writes out all valid commands to the user
-    if ( (strcmp ( input, "help" )) == 0 ) {
+    if ( ( strcmp ( input, "help" )) == 0 ) {
       printHelp();
     }
 
     // exits the program
-    else if ( ((strcmp ( input, "exit" )) == 0 ) ||
-               (strcmp ( input, "quit" )) == 0 ) {
+    else if ( (( strcmp ( input, "exit" )) == 0 ) ||
+               ( strcmp ( input, "quit" )) == 0 ) {
       exit(0);
     }
 
+    // shows the value of all variables
+    else if ( ( strncmp ( input, "show_vars", 9 )) == 0 ) {
+      show_vars ();
+    }
+
+    // shows values in file
+    else if ( ( strncmp ( input, "showCSV", 7 )) == 0 ) {
+      int i = 8, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      showCSV ( filename );
+    }
+
+    // import values from a CSV file to an array
+    else if ( ( strncmp ( input, "importCSV", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      importCSV( input[10], filename );
+    }
+
+    // export values from an array to a CSV file
+    else if ( ( strncmp ( input, "exportCSV", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      exportCSV( input[10], filename );
+    }
+/*
+    // export values from an array to a MAT file
+    else if ( ( strncmp ( input, "exportMAT", 9 )) == 0 ) {
+      int i = 12, j = 0;
+      do {
+        filename[j] = input[i];
+        i++, j++;
+      }
+      while ( input[i] != '\0' );
+      filename[j] = '\0';
+
+      exportMAT( input[10], filename );
+    }
+*/
+
+    // takes an array with analog signal and makes a perfect signal
+    else if ( ( strncmp ( input, "debounce", 8 )) == 0 ) {
+      debounce( input[9], input[11] );
+    }
+
     // show array or variable
-    else if ( (strncmp ( input, "show", 4 )) == 0 ) {
-	show( input[5] );
+    else if ( ( strncmp ( input, "show", 4 )) == 0 ) {
+      show( input[5] );
     }
 
     // clears array or varible
-    else if((strncmp( input, "clear", 5)) == 0){
-	clear( input[6]);
+    else if ( ( strncmp ( input, "clear", 5 )) == 0 ) {
+	     clear( input[6]);
     }
 
-    // not a valid input, displays message and let's the program continue
+    // sets array elements with even spaces from start to stop value
+    else if ( ( strncmp ( input, "array", 5 )) == 0 ) {
+      segmentString( input );
+      array( input [6], startValue, stopValue );
+    }
+
+    // sets a variable to a number and sets an array to a specific number in all elements
+    else if( ( strncmp ( input, "set", 3 )) == 0 ) {
+	    segmentString ( input );
+	    set ( input[4], startValue );
+    }
+
+    // calculator, allows +-*/ operators on variables and +- for arrays
+    else if ( ( input [2] == '=' ) ) {
+      calc ( input[0], input[4], input[8], input[6] );
+    }
+
+    else if( ( strncmp( input, "event", 5 )) == 0 ){
+    	event(input[6], input[8] );
+    }
+
+    // sets an array to values from start to stop with equal steps inbetween
     else {
       printf("Invalid expression. Try again or write 'help' to display valid commands.'\n");
       continue;

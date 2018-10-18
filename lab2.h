@@ -14,22 +14,43 @@ typedef struct arr {
   double v[ARRAY_LEN];
 } matlab_arr_t;
 
+/*
+typedef unsigned long uint32_t;
+typedef struct {
+  uint32_t type;
+  uint32_t mrows[ARRAY_LEN];
+  uint32_t ncols;
+  uint32_t imagf;
+  uint32_t namelen;
+} Fmatrix;
+*/
 /* global variables, beware */
 extern matlab_var_t vars[6];
 extern matlab_arr_t arrs[6];
+
+extern double startValue, stopValue;
 
 
 /* function declarations */
 void readLine ( char *inputPtr );
 void printHelp ( void );
 int variableOrArray ( char input );
+void segmentString ( char *input );
 
 matlab_var_t *find_var ( char var );
 matlab_arr_t *find_arr ( char var );
 
 int array ( char name, double start, double stop );
 int show ( char name );
+int show_vars ( void );
 int calc ( char r, char x,char y, char op );
 int clear (char name);
+int set ( char name, double v );
+int importCSV ( char var, const char *filename );
+int exportCSV ( char var, const char *filename );
+int showCSV ( const char *filename );
+int exportMAT ( char var, const char *filename );
+int debounce ( char R, char I );
+int event(char R, char I );
 
 #endif /* __LAB2_H__ */
