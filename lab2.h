@@ -1,5 +1,6 @@
 #ifndef __LAB2_H__
 #define __LAB2_H__
+#include <stdint.h>
 
 #define ARRAY_LEN	50
 
@@ -14,16 +15,14 @@ typedef struct arr {
   double v[ARRAY_LEN];
 } matlab_arr_t;
 
-/*
-typedef unsigned long uint32_t;
 typedef struct {
   uint32_t type;
-  uint32_t mrows[ARRAY_LEN];
+  uint32_t mrows;
   uint32_t ncols;
   uint32_t imagf;
   uint32_t namelen;
 } Fmatrix;
-*/
+
 /* global variables, beware */
 extern matlab_var_t vars[6];
 extern matlab_arr_t arrs[6];
@@ -51,5 +50,6 @@ int exportCSV ( char var, const char *filename );
 int showCSV ( const char *filename );
 int exportMAT ( char var, const char *filename );
 int debounce ( char R, char I );
+int event( char R, char I );
 
 #endif /* __LAB2_H__ */

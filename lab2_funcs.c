@@ -353,7 +353,7 @@ int exportCSV ( char var, const char *filename )
 
   return 1;
 }
-/*
+
 // exports an array to a MAT file
 int exportMAT ( char var, const char *filename )
 {
@@ -361,13 +361,32 @@ int exportMAT ( char var, const char *filename )
   FILE *out;
   int i = 0;
 
-  out = fopen ( filename, "w" );
+  tempStruct.type = 0000;
+  tempStruct.mrows = 50;
+  tempStruct.ncols = 1;
+  tempStruct.imagf = 0;
+  tempStruct.namelen = 2;
 
-  for ( i = 0; i < ARRAY_LEN, )
+  char temp[2];
+  temp[0] = var;
+  temp[1] = '\0';
+
+  if ( variableOrArray(var) == 1 ) {
+    out = fopen ( filename, "wb" );
+
+    fwrite( &tempStruct, sizeof(Fmatrix), 1, out );
+    fwrite( temp, sizeof(temp), 1, out );
+    for ( i = 0; i < ARRAY_LEN; i++ ) {
+      fwrite( &(*find_arr(var)).v[i], sizeof(double), 1, out );
+    }
+  }
+
+  fclose(out);
 
   return 666;
 }
-*/
+
+// function to remove interference and fluxing in a given signal
 int debounce ( char R, char I )
 {
   int i, counter = 0, j;
@@ -416,4 +435,39 @@ int debounce ( char R, char I )
     }
 
   return 0;
+}
+
+// function to filter out interference before and after an event in data
+int event ( char R, char I ) {
+	int i, j, k = 0, eStart, eStop;
+
+	// detecting event start and stop
+	for ( i = 0; i < ARRAY_LEN; ++i ) {
+		j = i;
+		while ( (*find_arr(I)).v[j] >= 0.5 ) {
+			++j;
+			++k;
+
+			if ( k == 10 ) {
+				eStart = i;
+			}
+
+			if ( (*find_arr(I)).v[j] < 0.5 ) {
+				eStop = j;
+			}
+		}
+	}
+
+	// loops in event data into result array
+	j = eStop;
+	clear ( (*find_arr(R)).n );
+
+	for ( i = eStart; i <= j; ++i ) {
+		(*find_arr(R)).v[i] = (*find_arr(I)).v[i];
+	}
+
+	printf("Event detected @%i\n", eStart);
+	printf("Event stopped  @%i\n", eStop);
+
+	return 0;
 }

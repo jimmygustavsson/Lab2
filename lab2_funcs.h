@@ -27,5 +27,6 @@ int exportCSV ( char var, const char *filename );
 int showCSV ( const char *filename );
 int exportMAT ( char var, const char *filename );
 int debounce ( char R, char I );
+int event( char R, char I );
 
 #endif /* __LAB2_FUNCS_H__ */
